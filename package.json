@@ -1,0 +1,13 @@
+{
+  "name": "laparlahh",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Sistem skrin tempahan makanan layan diri Laparlahh dengan panel admin CMS di Cloudflare Workers & D1",
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy"
+  },
+  "devDependencies": {
+    "wrangler": "^3.99.0"
+  }
+}

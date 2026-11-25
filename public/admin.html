@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin CMS — Laparlahh</title>
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div class="brand">
+        <div class="brand-logo" aria-hidden="true">⚙️</div>
+        <div>
+          <h1>Panel Admin CMS</h1>
+          <p>Urus pesanan dapur, menu, kategori &amp; tetapan kedai</p>
+        </div>
+      </div>
+      <div class="topbar-actions">
+        <a href="/" class="btn btn-sm">🖥️ Paparan Kiosk</a>
+        <button id="logoutBtn" class="btn btn-sm hidden" type="button">Log Keluar</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="admin-wrap">
+    <!-- Login View -->
+    <section id="loginView" class="login-card hidden">
+      <h2 style="margin-top:0;">Log Masuk Admin</h2>
+      <p style="color:var(--muted); font-size:0.9rem;">Masukkan kata laluan admin (`ADMIN_PASSWORD`) untuk mengakses panel pengurusan.</p>
+      <div id="loginAlert" class="alert alert-error hidden"></div>
+      <form id="loginForm">
+        <div class="field">
+          <label for="passwordInput">Kata Laluan</label>
+          <input id="passwordInput" type="password" required autocomplete="current-password" placeholder="Masukkan kata laluan..." />
+        </div>
+        <button id="loginSubmitBtn" class="btn btn-primary" style="width:100%;" type="submit">Log Masuk</button>
+      </form>
+    </section>
+
+    <!-- Dashboard View -->
+    <section id="dashboardView" class="hidden">
+      <div class="tabs" role="tablist">
+        <button type="button" class="tab-btn active" data-tab="orders">🧾 Pesanan Dapur</button>
+        <button type="button" class="tab-btn" data-tab="menu">🍽️ Menu</button>
+        <button type="button" class="tab-btn" data-tab="categories">🏷️ Kategori</button>
+        <button type="button" class="tab-btn" data-tab="settings">🏪 Tetapan Kedai</button>
+      </div>
+
+      <div id="globalAlert" class="alert hidden"></div>
+
+      <!-- Tab: Orders -->
+      <div id="tab-orders" class="panel">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px; flex-wrap:wrap; gap:10px;">
+          <h2 style="margin:0;">Pesanan Dapur</h2>
+          <button id="refreshOrdersBtn" class="btn btn-sm" type="button">🔄 Muat Semula</button>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Giliran</th>
+                <th>Jenis</th>
+                <th>Item</th>
+                <th>Jumlah</th>
+                <th>Status</th>
+                <th>Tindakan</th>
+              </tr>
+            </thead>
+            <tbody id="ordersBody"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Tab: Menu -->
+      <div id="tab-menu" class="panel hidden">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px; flex-wrap:wrap; gap:10px;">
+          <h2 style="margin:0;">Senarai Menu</h2>
+          <button id="addItemBtn" class="btn btn-primary btn-sm" type="button">+ Tambah Item</button>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Gambar</th>
+                <th>Nama &amp; Kategori</th>
+                <th>Harga Pantas (RM)</th>
+                <th>Status</th>
+                <th>Tindakan</th>
+              </tr>
+            </thead>
+            <tbody id="menuBody"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Tab: Categories -->
+      <div id="tab-categories" class="panel hidden">
+        <h2 style="margin-top:0;">Urus Kategori</h2>
+        <form id="addCategoryForm" class="form-grid" style="align-items:end; margin-bottom:18px;">
+          <div class="field" style="margin:0;">
+            <label for="newCatName">Nama Kategori</label>
+            <input id="newCatName" type="text" maxlength="60" required placeholder="cth: Pencuci Mulut" />
+          </div>
+          <div class="field" style="margin:0;">
+            <label for="newCatEmoji">Emoji</label>
+            <input id="newCatEmoji" type="text" maxlength="16" value="🍽️" />
+          </div>
+          <div>
+            <button class="btn btn-primary" type="submit">+ Tambah Kategori</button>
+          </div>
+        </form>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Emoji</th>
+                <th>Nama</th>
+                <th>Status</th>
+                <th>Tindakan</th>
+              </tr>
+            </thead>
+            <tbody id="categoriesBody"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Tab: Settings -->
+      <div id="tab-settings" class="panel hidden">
+        <h2 style="margin-top:0;">Tetapan Kedai</h2>
+        <form id="settingsForm" style="max-width:520px;">
+          <div class="field">
+            <label for="settingStoreName">Nama Kedai</label>
+            <input id="settingStoreName" type="text" maxlength="80" required />
+          </div>
+          <div class="field">
+            <label for="settingBanner">Teks Banner</label>
+            <input id="settingBanner" type="text" maxlength="240" required />
+          </div>
+          <div class="field">
+            <label style="display:flex; align-items:center; gap:8px; cursor:pointer; color:var(--text);">
+              <input id="settingStoreOpen" type="checkbox" style="width:18px; height:18px;" />
+              <span>Kedai Dibuka (Terima Pesanan Kiosk)</span>
+            </label>
+          </div>
+          <button class="btn btn-primary" type="submit">Simpan Tetapan</button>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <!-- Item Add/Edit Modal -->
+  <div id="itemModal" class="modal-backdrop hidden" role="dialog" aria-modal="true" aria-labelledby="itemModalTitle">
+    <div class="modal-card">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px;">
+        <h2 id="itemModalTitle" style="margin:0;">Tambah Item</h2>
+        <button id="closeItemModalBtn" class="btn btn-sm" type="button">Tutup</button>
+      </div>
+      <form id="itemForm">
+        <input id="itemId" type="hidden" />
+        <input id="itemImageId" type="hidden" />
+        <div class="field">
+          <label for="itemName">Nama Item</label>
+          <input id="itemName" type="text" maxlength="140" required />
+        </div>
+        <div class="form-grid">
+          <div class="field">
+            <label for="itemCategory">Kategori</label>
+            <select id="itemCategory" required></select>
+          </div>
+          <div class="field">
+            <label for="itemPrice">Harga (RM)</label>
+            <input id="itemPrice" type="number" step="0.01" min="0" max="99999" required />
+          </div>
+        </div>
+        <div class="form-grid">
+          <div class="field">
+            <label for="itemEmoji">Emoji Fallback</label>
+            <input id="itemEmoji" type="text" maxlength="16" value="🍽️" required />
+          </div>
+          <div class="field">
+            <label for="itemImageFile">Muat Naik Gambar (Auto-mampat &lt;95KB)</label>
+            <input id="itemImageFile" type="file" accept="image/jpeg,image/png,image/webp" />
+          </div>
+        </div>
+        <div id="imagePreviewWrap" class="hidden" style="margin-bottom:12px; display:flex; align-items:center; gap:10px;">
+          <img id="imagePreview" class="thumb" alt="Pratonton" />
+          <span id="imageInfo" style="font-size:0.82rem; color:var(--muted);"></span>
+          <button id="clearImageBtn" class="btn btn-sm" type="button">Buang Gambar</button>
+        </div>
+        <div class="field">
+          <label for="itemDesc">Penerangan</label>
+          <textarea id="itemDesc" rows="2" maxlength="400"></textarea>
+        </div>
+        <div class="field">
+          <label style="display:flex; align-items:center; gap:8px; cursor:pointer; color:var(--text);">
+            <input id="itemActive" type="checkbox" checked style="width:18px; height:18px;" />
+            <span>Aktif di Kiosk</span>
+          </label>
+        </div>
+        <button id="saveItemBtn" class="btn btn-primary" style="width:100%;" type="submit">Simpan Item</button>
+      </form>
+    </div>
+  </div>
+
+  <script src="/admin.js"></script>
+</body>
+</html>

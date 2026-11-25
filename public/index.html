@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Laparlahh — Tempahan Layan Diri</title>
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div class="brand">
+        <div class="brand-logo" aria-hidden="true">🍽️</div>
+        <div>
+          <h1 id="storeName">Laparlahh</h1>
+          <p id="storeBanner">Makan sedap, hati pun lapang.</p>
+        </div>
+      </div>
+      <div class="topbar-actions">
+        <span id="storeStatus" class="status-pill open">● Dibuka</span>
+        <button id="trackLastBtn" class="btn btn-sm hidden" type="button">Semak Giliran</button>
+        <a href="/admin.html" class="btn btn-sm">⚙️ Admin</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="kiosk-layout">
+    <section>
+      <div id="closedNotice" class="closed-banner hidden">
+        Maaf, kedai sedang ditutup buat sementara waktu. Pesanan baru tidak dapat diterima.
+      </div>
+      <div id="categoryBar" class="category-bar" role="tablist" aria-label="Kategori Menu"></div>
+      <div id="menuGrid" class="menu-grid"></div>
+    </section>
+
+    <aside class="cart-panel" aria-label="Troli Pesanan">
+      <h2>
+        <span>🛒 Troli Anda</span>
+        <span id="cartCount" class="badge" style="background: var(--surface-2);">0 item</span>
+      </h2>
+
+      <div class="order-type-group" role="group" aria-label="Jenis Pesanan">
+        <button type="button" class="type-btn active" data-type="dine-in">🍽️ Makan Sini</button>
+        <button type="button" class="type-btn" data-type="takeaway">🛍️ Bungkus</button>
+      </div>
+
+      <div id="cartItems" class="cart-items">
+        <div class="cart-empty">Troli masih kosong. Pilih menu kegemaran anda!</div>
+      </div>
+
+      <div class="cart-summary">
+        <div class="total-line">
+          <span>Jumlah</span>
+          <span id="cartTotal">RM 0.00</span>
+        </div>
+        <div id="orderError" class="alert alert-error hidden"></div>
+        <button id="submitOrderBtn" class="btn btn-primary" type="button" disabled>
+          Hantar Pesanan
+        </button>
+      </div>
+    </aside>
+  </main>
+
+  <div id="orderModal" class="modal-backdrop hidden" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modal-card">
+      <div style="display:flex; justify-content:space-between; align-items:center;">
+        <h2 id="modalTitle" style="margin:0;">Pesanan Diterima</h2>
+        <button id="closeModalBtn" class="btn btn-sm" type="button">Tutup</button>
+      </div>
+
+      <div class="queue-box">
+        <div class="queue-label">Nombor Giliran Anda</div>
+        <div id="modalQueue" class="queue-number">L0001</div>
+        <div id="modalMeta" style="color: var(--muted); font-size: 0.9rem;"></div>
+      </div>
+
+      <div id="statusSteps" class="status-steps"></div>
+      <p id="statusText" style="text-align:center; font-weight:700; margin: 10px 0 18px;"></p>
+
+      <button id="newOrderBtn" class="btn btn-primary" style="width:100%;" type="button">
+        Buat Pesanan Baru
+      </button>
+    </div>
+  </div>
+
+  <script src="/kiosk.js"></script>
+</body>
+</html>

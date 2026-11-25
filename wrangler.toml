@@ -1,0 +1,12 @@
+name = "laparlahh"
+main = "worker.js"
+compatibility_date = "2025-01-01"
+
+[assets]
+directory = "./public"
+binding = "ASSETS"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "laparrlahh"
+database_id = "5557fc6e-22df-431c-8f87-bf5ba9c21c87"
